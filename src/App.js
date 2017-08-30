@@ -1,42 +1,89 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import react-scripts from 'react-scripts';
+import './App.css';
 
-class FormStructure extends React.Component {
-  renderButton(i) {
-    return <Button value={i}/> (
+class Handicap extends React.Component {
+  constructor(props) {
+    super(props);
+    //next step: turn the below elements into an array to use in calculating handicap function ~ squares
+    this.state = {
+      handicap:0,
+      score:0,
+      rating:0,
+      slope:0
+    };
 
-    <div className="form-structure">
-    <h1>Score for {this.props.name}</h1>
-    <ul>
-      <li><form>My current handicap</form></li>
-      <li><form>My Score</form></li>
-      <li><form>Course Rating</form></li>
-      <li><form>Course Slope</form></li>
-    </ul>
-    </div>
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(event) {
+    alert('Your score is: ' + this.state.value);
+    event.preventDefault();
+
+    // if calculateHandicap() {
+    //   return;
+    // }
+    // this.setState ({
+    //
+    // });
+  }
+
+
+  render() {
+    return (
+      <form onSubmit = {this.handleSubmit}>
+        <label>
+        My current handicap:
+        <input
+        name = "handicap"
+        type="text"
+        value={this.state.handicap}
+        onChange={this.handleInputChange} />
+        </label>
+        <label>
+          My Score:
+          <input
+          name = "score"
+          type="text"
+          value={this.state.score}
+          onChange={this.handleInputChange}/ >
+        </label>
+        <label>
+          Course Rating:
+          <input
+          name = "rating"
+          type="text"
+          value={this.state.rating}
+          onChange={this.handleInputChange} />
+        </label>
+        <label>
+          Course Slope:
+          <input
+          name = "slope"
+          type="text"
+          value={this.state.slope}
+          onChange={this.handleInputChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     );
   }
 }
 
-class Button extends React.Component {
-  render() {
-    return (
-      <div>
-        <button className ="submit"> onCLick={() => alert('click')}</button>
-        {this.props.value}
-        // onClick = {this.handleClick}>Calculate my Score
-      </div>
-    );
-  }
-}
-
-class FormInput extends React.Component {
-  render() {
-    return (
-      <div className = "form-input">
-
-      </div>
-    );
-  }
+//------------------------
+export default Handicap;
+//------------------------
+function calculateHandicap() {
+  return this.state.handicap - (((this.state.score - this.state.rating) * 113)/this.state.slope)
 }
