@@ -28,15 +28,16 @@ class Handicap extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Your score is: ' + this.state.value);
-    event.preventDefault();
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-    // if calculateHandicap() {
-    //   return;
-    // }
-    // this.setState ({
-    //
-    // });
+    event.preventDefault();
+    var updatedHandicap = calculateHandicap(this.state.handicap, this.state.score, this.state.rating, this.state.slope);
+
+    this.setState ({
+      [name]: updatedHandicap
+    });
   }
 
 
@@ -84,6 +85,6 @@ class Handicap extends React.Component {
 //------------------------
 export default Handicap;
 //------------------------
-function calculateHandicap() {
-  return this.state.handicap - (((this.state.score - this.state.rating) * 113)/this.state.slope)
+function calculateHandicap(hand, scor, rat, slop) {
+  return hand - (((scor - rat) * 113)/slop)
 }
