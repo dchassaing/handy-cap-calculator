@@ -28,15 +28,13 @@ class Handicap extends React.Component {
   }
 
   handleSubmit(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const status = 'Your current handicap is: ';
 
     event.preventDefault();
     var updatedHandicap = calculateHandicap(this.state.handicap, this.state.score, this.state.rating, this.state.slope);
 
     this.setState ({
-      [name]: updatedHandicap
+      [status]: updatedHandicap
     });
   }
 
@@ -76,12 +74,22 @@ class Handicap extends React.Component {
           value={this.state.slope}
           onChange={this.handleInputChange} />
         </label>
-        <input type="submit" value="Submit" />
+          <input
+          type="submit"
+          value="Submit" />
       </form>
     );
   }
 }
 
+class displayUpdatedHandicap extends React.Component {
+
+  render() {
+    return (
+      <div className = "status">{this.state.updatedHandicap}</div>
+    );
+  }
+}
 //------------------------
 export default Handicap;
 //------------------------
