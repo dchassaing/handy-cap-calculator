@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 class Handicap extends React.Component {
   constructor(props) {
