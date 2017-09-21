@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+import {displayHandicap} from './Display.js';
 
 class Handicap extends React.Component {
   constructor(props) {
@@ -29,19 +30,16 @@ class Handicap extends React.Component {
   }
 
   handleSubmit(event) {
-    const status = 'Your current handicap is: ';
 
     event.preventDefault();
-    var updatedHandicap = calculateHandicap(this.state.handicap, this.state.score, this.state.rating, this.state.slope);
+    this.props.formSubmitted(this.state.handicap, this.state.score, this.state.rating, this.state.slope);
 
-    this.setState ({
-      [status]: updatedHandicap
-    });
   }
 
 
   render() {
     return (
+      <div>
       <form onSubmit = {this.handleSubmit}>
         <label>
         My current handicap:
@@ -79,13 +77,11 @@ class Handicap extends React.Component {
           type="submit"
           value="Submit" />
       </form>
+      </div>
     );
   }
 }
 
 //------------------------
-export default Handicap;
+export {Handicap};
 //------------------------
-function calculateHandicap(hand, scor, rat, slop) {
-  return hand - (((scor - rat) * 113)/slop)
-}

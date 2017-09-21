@@ -2,92 +2,38 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+import {Handicap} from './Form.js';
 import {displayHandicap} from './Display.js';
 
-class Handicap extends React.Component {
-  constructor(props) {
-    super(props);
-    //next step: turn the below elements into an array to use in calculating handicap function ~ squares
-    this.state = {
-      handicap:0,
-      score:0,
-      rating:0,
-      slope:0
-    };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+class App extends React.Component {
+constructor(props){
+super(props);
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+}
+
+ calculateHandicap(hand, scor, rat, slop) {
+    const newHandicap =  hand - (((scor - rat) * 113)/slop)
 
     this.setState({
-      [name]: value
+      updatedHandicap : newHandicap
     });
+
   }
 
-  handleSubmit(event) {
 
-    event.preventDefault();
-    var updatedHandicap = calculateHandicap(this.state.handicap, this.state.score, this.state.rating, this.state.slope);
-
-    this.setState ({
-      calculatedHandicap: updatedHandicap
-    });
-  }
 
 
   render() {
     return (
       <div>
-      <form onSubmit = {this.handleSubmit}>
-        <label>
-        My current handicap:
-        <input
-        name = "handicap"
-        type="text"
-        value={this.state.handicap}
-        onChange={this.handleInputChange} />
-        </label>
-        <label>
-          My Score:
-          <input
-          name = "score"
-          type="text"
-          value={this.state.score}
-          onChange={this.handleInputChange}/ >
-        </label>
-        <label>
-          Course Rating:
-          <input
-          name = "rating"
-          type="text"
-          value={this.state.rating}
-          onChange={this.handleInputChange} />
-        </label>
-        <label>
-          Course Slope:
-          <input
-          name = "slope"
-          type="text"
-          value={this.state.slope}
-          onChange={this.handleInputChange} />
-        </label>
-          <input
-          type="submit"
-          value="Submit" />
-      </form>
+        < Handicap formSubmitted = {this.calculateHandicap}/>
+        < displayHandicap newHandicap = {this.state.updatedHandicap}/>
       </div>
     );
   }
 }
 
 //------------------------
-export default Handicap;
+export default App;
 //------------------------
-function calculateHandicap(hand, scor, rat, slop) {
-  return hand - (((scor - rat) * 113)/slop)
-}
